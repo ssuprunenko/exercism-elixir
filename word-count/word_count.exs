@@ -6,21 +6,21 @@ defmodule Words do
   """
   @spec count(String.t) :: map()
   def count(sentence) do
-    words = sentence |> String.replace(~r/[^\w-]|_/u, " ") |> String.split
+    words = sanitize(sentence)
 
     Enum.reduce words, %{}, fn word, acc ->
       update_count(acc, word)
     end
   end
 
-  defp update_count(occurrences, word) do
-    word = String.downcase word
-    count = occurrences[word]
+  defp sanitize(sentence) do
+    sentence
+    |> String.replace(~r/[^\w-]|_/u, " ")
+    |> String.downcase
+    |> String.split
+  end
 
-    if is_nil(count) do
-      Map.put(occurrences, word, 1)
-    else
-      Map.put(occurrences, word, count + 1)
-    end
+  defp update_count(occurrences, word) do
+    Map.update(occurrences, word, 1, &(&1 + 1))
   end
 end
