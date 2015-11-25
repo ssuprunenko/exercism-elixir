@@ -34,7 +34,6 @@ defmodule WordsTest do
     assert Words.count("testing, 1, 2 testing") == expected
   end
 
-  @tag :pending
   test "hyphens" do
     expected = %{"co-operative" => 1}
     assert Words.count("co-operative") == expected
@@ -50,7 +49,6 @@ defmodule WordsTest do
     assert Words.count("go Go GO") == expected
   end
 
-  @tag :pending
   test "German" do
     expected = %{"götterfunken" => 1, "schöner" => 1, "freude" => 1}
     assert Words.count("Freude schöner Götterfunken") == expected
