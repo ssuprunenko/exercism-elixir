@@ -6,20 +6,21 @@ defmodule Words do
   """
   @spec count(String.t) :: map()
   def count(sentence) do
-    words = String.split(sentence, [" ", "_"])
+    words = sentence |> String.replace(~r{[_\W]}, " ") |> String.split
 
     Enum.reduce words, %{}, fn word, acc ->
       update_count(acc, word)
     end
   end
 
-  defp update_count(map, word) do
-    count = map[word]
+  defp update_count(occurrences, word) do
+    word = String.downcase word
+    count = occurrences[word]
 
     if is_nil(count) do
-      Map.put(map, word, 1)
+      Map.put(occurrences, word, 1)
     else
-      Map.put(map, word, count + 1)
+      Map.put(occurrences, word, count + 1)
     end
   end
 end
