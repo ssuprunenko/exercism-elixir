@@ -6,5 +6,6 @@ defmodule Words do
   """
   @spec count(String.t) :: map()
   def count(sentence) do
+    Map.put(%{}, sentence, 1)
   end
 end
