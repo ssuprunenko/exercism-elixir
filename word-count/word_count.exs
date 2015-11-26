@@ -6,7 +6,7 @@ defmodule Words do
   """
   @spec count(String.t) :: map()
   def count(sentence) do
-    words = sanitize(sentence)
+    words = sentence |> sanitize |> String.split
 
     Enum.reduce words, %{}, fn word, acc ->
       update_count(acc, word)
@@ -17,7 +17,6 @@ defmodule Words do
     sentence
     |> String.replace(~r/[^\w-]|_/u, " ")
     |> String.downcase
-    |> String.split
   end
 
   defp update_count(occurrences, word) do
