@@ -8,18 +8,17 @@ defmodule ListOps do
 
   @spec count(list) :: non_neg_integer
   def count(l) do
-    cond do
-      l == [] ->
-        0
-      :else ->
-        [_ | tail] = l
-        1 + count(tail)
+    if l == [] do
+      0
+    else
+      [_ | tail] = l
+      1 + count(tail)
     end
   end
 
   @spec reverse(list) :: list
   def reverse(l) do
-
+    
   end
 
   @spec map(list, (any -> any)) :: list
@@ -35,7 +34,12 @@ defmodule ListOps do
   @type acc :: any
   @spec reduce(list, acc, ((any, acc) -> acc)) :: acc
   def reduce(l, acc, f) do
-
+    if l == [] do
+      acc
+    else
+      [head | tail] = l
+      reduce(tail, f.(acc, head), f)
+    end
   end
 
   @spec append(list, list) :: list
