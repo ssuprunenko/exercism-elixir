@@ -12,38 +12,37 @@ defmodule ListOps do
   end
 
   @spec reverse(list) :: list
-  def reverse(l) do
-
+  def reverse([]), do: []
+  def reverse([head | tail]) do
+    reverse(tail) ++ [head]
   end
 
   @spec map(list, (any -> any)) :: list
   def map(l, f) do
-
+    for n <- l, do: f.(n)
   end
 
   @spec filter(list, (any -> as_boolean(term))) :: list
   def filter(l, f) do
-
+    for n <- l, f.(n), do: n
   end
 
   @type acc :: any
   @spec reduce(list, acc, ((any, acc) -> acc)) :: acc
-  def reduce(l, acc, f) do
-    if l == [] do
-      acc
-    else
-      [head | tail] = l
-      reduce(tail, f.(head, acc), f)
-    end
+  def reduce([], acc, _), do: acc
+  def reduce([head | tail], acc, f) do
+    reduce(tail, f.(head, acc), f)
   end
 
   @spec append(list, list) :: list
-  def append(a, b) do
-
+  def append([], b), do: b
+  def append([head | tail], b) do
+    [head | append(tail, b)]
   end
 
   @spec concat([[any]]) :: [any]
-  def concat(ll) do
-
+  def concat([]), do: []
+  def concat([head | tail]) do
+    append(head, concat(tail))
   end
 end
