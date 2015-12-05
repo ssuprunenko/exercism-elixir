@@ -12,9 +12,10 @@ defmodule ListOps do
   end
 
   @spec reverse(list) :: list
-  def reverse([]), do: []
-  def reverse([head | tail]) do
-    reverse(tail) ++ [head]
+  def reverse(l), do: reverse(l, [])
+  defp reverse([], l), do: l
+  defp reverse([head | tail], l) do
+    reverse(tail, [head | l])
   end
 
   @spec map(list, (any -> any)) :: list
